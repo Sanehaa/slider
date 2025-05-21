@@ -1,0 +1,333 @@
+.footer-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.sliding-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  color: #fff;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+       background-color: rgb(158 120 226 / 16%);
+    background-image: linear-gradient(to right, rgb(255 255 255 / 0%) 0px, rgb(255 255 255 / 0%) 40px, rgb(255 255 255 / 6%) 40px, rgb(245 245 245 / 8%) 80px);
+    background-size: 80px 100%;
+  z-index: 998;
+  backdrop-filter: blur(5px);
+}
+
+body:not(.theme-dark) .sliding-footer {
+  background-color: rgb(174 147 222 / 21%);
+  background-image: linear-gradient(to right, rgb(205 180 219 / 37%) 0px, rgb(205 180 219 / 47%) 40px, rgb(165 125 187 / 42%) 40px, rgb(165 125 187 / 42%) 80px);
+}
+
+.sliding-footer.open {
+  transform: translateY(0);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  margin-right: 10px;
+}
+
+.copyright {
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.social-icons-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.social-icons {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+.social-icons li {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.social-icons a {
+  color: #fff;
+  transition: color 0.2s ease;
+  display: block;
+  position: relative;
+  height: 32px;
+  width: 32px;
+  overflow: hidden;
+}
+
+.social-icons a:hover {
+  color: #0088cc;
+}
+
+.icon-circle {
+  width: 32px;
+  height: 32px;
+  background-color: #5a3d5c;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  font-weight: bold;
+  font-size: 14px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+body:not(.theme-dark) .icon-circle {
+  background-color: #cf9dea;
+}
+
+body:not(.theme-dark) .social-icons li.github-icon a::after,
+body:not(.theme-dark) .social-icons li.linkedin-icon a::after,
+body:not(.theme-dark) .social-icons li.email-icon a::after {
+  color: #cf9dea;
+}
+
+/* Update corner icon hover colors for non-dark theme */
+body:not(.theme-dark) .right-corner-icon:hover .icon-circle,
+body:not(.theme-dark) .left-corner-icon:hover .icon-circle {
+  background-color: #fff;
+  color: #cf9dea;
+}
+
+.social-icons a::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  font-weight: bold;
+  font-size: 14px;
+  color: #5a3d5c;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/* Fix for hover icons */
+.social-icons li.github-icon a::after {
+  content: "GH";
+  background-color: #fff;
+  color: #5a3d5c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icons li.linkedin-icon a::after {
+  content: "in";
+  background-color: #fff;
+  color: #5a3d5c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icons li.email-icon a::after {
+  content: "@";
+  background-color: #fff;
+  color: #5a3d5c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Make sure the color is visible for SVG icons on hover */
+.social-icons a:hover::after svg {
+  stroke: rgba(133, 96, 199, 0.9);
+}
+.icon-circle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.social-icons a:hover .icon-circle {
+  transform: translateY(-100%);
+}
+
+.social-icons a:hover::after {
+  transform: translateY(-100%);
+}
+
+.bird-icon:before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 16px;
+}
+
+.mail-icon:before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpolyline points='22,6 12,13 2,6'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpolyline points='22,6 12,13 2,6'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 16px;
+}
+
+.footer-dock {
+  position: fixed;
+  width: 100%;
+  bottom: 20px;
+  left: 0;
+  z-index: 999;
+}
+
+.corner-icons {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 25px;
+  width: 100%;
+  position: relative;
+}
+
+.left-corner-icon {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  margin-left:15px;
+}
+
+.icon-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.icon-info, .icon-down {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Fill animation on hover */
+.right-corner-icon {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.right-corner-icon .icon-circle {
+  transition: all 0.3s ease;
+}
+
+.right-corner-icon:hover .icon-circle {
+  background-color: #fff;
+  color: #8560c7;
+}
+
+.left-corner-icon .icon-circle {
+  transition: all 0.3s ease;
+}
+
+.left-corner-icon:hover .icon-circle {
+  background-color: #fff;
+  color: #8560c7;
+}
+
+/* Icon transition animation */
+.open ~ .footer-dock .icon-down {
+  transform: rotate(0);
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+    padding: 0 10px;
+  }
+  
+  .social-icons li {
+    margin-left: 8px;
+  }
+  
+  .icon-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .footer-logo {
+    font-size: 10px;
+  }
+  
+  .copyright {
+    display: none;
+  }
+  
+  .corner-icons {
+    padding-bottom: 25px;
+  }
+  
+  .left-corner-icon {
+    left: 10px;
+  }
+  
+  .right-corner-icon {
+    right: 10px;
+  }
+}

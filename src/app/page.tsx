@@ -1,103 +1,164 @@
-import Image from "next/image";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import DeskSetup from '@/components/DeskSetup';
+import Navigation from '@/components/Navigation/index';
+import Footer from '@/components/Footer/index';
+import { useTheme } from '@/hooks/useTheme';
+import { createFloatingAnimation } from '@/utils/animations';
+import IndexAppComponent from '../components/IndexAppComponen/index';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { isDarkTheme, toggleTheme } = useTheme();
+  const [showIndexApp, setShowIndexApp] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const imageContainer = document.getElementById('image-placeholder');
+    
+    if (imageContainer) {
+      imageContainer.addEventListener('click', function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = function(e) {
+          if (e.target && (e.target as HTMLInputElement).files && (e.target as HTMLInputElement).files![0]) {
+            const file = (e.target as HTMLInputElement).files![0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+              if (e.target && e.target.result) {
+                const img = document.createElement('img');
+                img.src = e.target.result as string;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                
+                // Clear container and add image
+                if (imageContainer) {
+                  imageContainer.innerHTML = '';
+                  imageContainer.appendChild(img);
+                }
+              }
+            };
+            
+            reader.readAsDataURL(file);
+          }
+        };
+        
+        input.click();
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    // Set up event listeners for interactive elements
+    const funText = document.querySelector('.interaction-fun');
+    const talkText = document.querySelector('.interaction-talk');
+    const writeText = document.querySelector('.interaction-write');
+
+    if (funText) {
+      funText.addEventListener('mouseover', () => createFloatingAnimation('fun-objects'));
+    }
+    if (talkText) {
+      talkText.addEventListener('mouseover', () => createFloatingAnimation('talk-objects'));
+    }
+    if (writeText) {
+      writeText.addEventListener('mouseover', () => createFloatingAnimation('write-objects'));
+    }
+
+    // Clean up event listeners
+    return () => {
+      if (funText) {
+        funText.removeEventListener('mouseover', () => createFloatingAnimation('fun-objects'));
+      }
+      if (talkText) {
+        talkText.removeEventListener('mouseover', () => createFloatingAnimation('talk-objects'));
+      }
+      if (writeText) {
+        writeText.removeEventListener('mouseover', () => createFloatingAnimation('write-objects'));
+      }
+    };
+  }, []);
+
+  // Initialize the index.js app when showIndexApp becomes true
+  useEffect(() => {
+    if (showIndexApp) {
+      // The IndexAppComponent will handle initialization
+    }
+  }, [showIndexApp]);
+
+  // Handle painting click to show the index.js app
+  const handlePaintingClick = () => {
+    setShowIndexApp(true);
+  };
+
+  // Close the index.js app and return to main page
+  const handleCloseIndexApp = () => {
+    setShowIndexApp(false);
+  };
+
+  // Render the index.js app overlay
+  if (showIndexApp) {
+    return <IndexAppComponent onClose={handleCloseIndexApp} />;
+  }
+
+  return (
+    <div className="container">      
+      <div className="left-section">
+        <div className="picture-frame">
+          <div className="nail"></div>
+          <div className="string"></div>
+          <div className="wooden-frame">
+            <div className="image-container" onClick={handlePaintingClick}>
+              <img src="/painting.png" alt="Painting" style={{ maxWidth: '100%', maxHeight: '100%', cursor: 'pointer' }} />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <DeskSetup toggleTheme={toggleTheme} />
+      </div>
+      
+      <div className="right-section">
+        <Navigation isDarkTheme={isDarkTheme} toggleTheme={toggleTheme} />
+        
+        <div className="greeting">
+          <span className="wave">👋</span> Hi, I'm Saneha
+        </div>
+        
+        <div className="heading">
+          I like making <span className="outline-text interaction-fun">fun</span>,
+          <br />
+          interactive things
+          <br />
+          with code. I also
+          <br />
+          <span className="outline-text interaction-talk">talk</span> <span className="special-char">&</span> <span className="outline-text interaction-write">write</span> about
+          <br />
+          those things.
+        </div>
+        
+        <div className="fun-objects">
+          <div className="floating-object code-object" style={{ top: 400, left: 400 }}>{`{`}</div>
+          <div className="floating-object code-object" style={{ top: 410, left: 430 }}>{`}`}</div>
+          <div className="floating-object code-object" style={{ top: 390, left: 460 }}>{`<>`}</div>
+          <div className="floating-object code-object" style={{ top: 420, left: 380 }}>{`~`}</div>
+          <div className="floating-object code-object" style={{ top: 380, left: 410 }}>{`;`}</div>
+        </div>
+        
+        <div className="talk-objects">
+          <div className="floating-object" style={{ top: 520, left: 400, width: 30, height: 30, backgroundColor: '#9fa8da', borderRadius: '50%' }}></div>
+          <div className="floating-object" style={{ top: 510, left: 440, width: 25, height: 25, backgroundColor: '#7986cb', borderRadius: '50%' }}></div>
+          <div className="floating-object" style={{ top: 500, left: 380, width: 20, height: 20, backgroundColor: '#5c6bc0', borderRadius: '50%' }}></div>
+        </div>
+        
+        <div className="write-objects">
+          <div className="floating-object pencil" style={{ top: 520, left: 650, transform: 'rotate(45deg)' }}></div>
+          <div className="floating-object pencil" style={{ top: 510, left: 680, transform: 'rotate(-30deg)' }}></div>
+          <div className="floating-object pencil" style={{ top: 500, left: 620, transform: 'rotate(15deg)' }}></div>
+          <div className="floating-object pencil" style={{ top: 490, left: 660, transform: 'rotate(-45deg)' }}></div>
+        </div>
+      </div>
+      
+      <Footer />
     </div>
   );
 }
